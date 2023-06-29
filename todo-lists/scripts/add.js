@@ -1,4 +1,3 @@
-
 // Variable para almacenar las tareas
 let todos = [];
 
@@ -9,7 +8,6 @@ const contador = document.getElementById('contador');
 const checkboxInput = document.getElementById('checkbox');
 const clearCompletedBtn = document.getElementById('clearCompleted');
 
-
 function showNotification(message) {
   var notification = document.getElementById('notification');
   notification.innerText = message;
@@ -19,18 +17,14 @@ function showNotification(message) {
   }, 3000); // Oculta la notificación después de 3 segundos (ajusta el tiempo según tus necesidades)
 }
 
-// Llamada a la función para mostrar la notificación de palabras mínimas
 function showAlertMinLetters() {
   showNotification('Debes introducir al menos tres letras.');
 }
 
-// Llamada a la función para mostrar la notificación de palabras máximas
 function showAlertMaxLetters() {
   showNotification('Has alcanzado el límite de 70 letras.');
 }
 
-
-// Función para actualizar el contador y mostrar las tareas sin hacer
 function updateItemCount() {
   const count = todos.reduce((count, todo) => {
     return todo.completed ? count : count + 1;
@@ -38,7 +32,6 @@ function updateItemCount() {
   contador.textContent = `${count} items left`;
 }
 
-// Función para crear un nuevo elemento de todo
 function createTodoElement(text, completed) {
   const newTodo = document.createElement('li');
   newTodo.classList.add('todo-item');
@@ -53,9 +46,8 @@ function createTodoElement(text, completed) {
   const deleteButton = document.createElement('button');
   deleteButton.textContent = 'x';
   deleteButton.classList.add('delete-button');
-  deleteButton.style.visibility = 'hidden'; // Oculta el botón inicialmente
+  deleteButton.style.visibility = 'hidden';
 
-  // Mostrar/Ocultar el botón "x" al pasar el cursor sobre el elemento
   newTodo.addEventListener('mouseover', () => {
     deleteButton.style.visibility = 'visible';
   });
@@ -63,7 +55,6 @@ function createTodoElement(text, completed) {
     deleteButton.style.visibility = 'hidden';
   });
 
-  // Eliminar el elemento al hacer clic en el botón "x"
   deleteButton.addEventListener('click', () => {
     deleteTodo(newTodo);
   });
@@ -75,7 +66,6 @@ function createTodoElement(text, completed) {
   return newTodo;
 }
 
-// Evento para manejar el cambio en el checkbox
 todoList.addEventListener('change', event => {
   const checkbox = event.target;
   if (checkbox.matches('.todo-item input[type="checkbox"]')) {
@@ -89,10 +79,8 @@ todoList.addEventListener('change', event => {
   }
 });
 
-// Evento para manejar el cambio en el checkbox
 checkboxInput.addEventListener('change', addTodo);
 
-// Evento para manejar el clic en el botón "Clear Completed"
 clearCompletedBtn.addEventListener('click', function() {
   todos = todos.filter(todo => !todo.completed);
   renderTodos();
@@ -100,29 +88,21 @@ clearCompletedBtn.addEventListener('click', function() {
   saveTodos();
 });
 
-// Obtén una referencia a los elementos de la lista
 const listItems = document.querySelectorAll('.control__container ul li');
 
-// Recorre cada elemento de la lista y agrega un manejador de eventos
 listItems.forEach(function(item) {
   item.addEventListener('click', function() {
-    // Obtén el texto del elemento seleccionado
     const selectedOption = item.textContent;
-
-    // Recorre todos los elementos de la lista de tareas y muestra/oculta según la opción seleccionada
     todos.forEach(function(todo) {
       const todoItem = document.getElementById(`todo-${todos.indexOf(todo)}`);
       switch (selectedOption) {
         case 'All':
-          // Muestra todos los elementos
           todoItem.style.display = 'flex';
           break;
         case 'Active':
-          // Muestra los elementos que no están marcados como completados
           todoItem.style.display = todo.completed ? 'none' : 'flex';
           break;
         case 'Complete':
-          // Muestra los elementos que están marcados como completados
           todoItem.style.display = todo.completed ? 'flex' : 'none';
           break;
       }
@@ -130,20 +110,21 @@ listItems.forEach(function(item) {
   });
 });
 
-// Función para guardar los todos en el local storage
 function saveTodos() {
   localStorage.setItem('todos', JSON.stringify(todos));
 }
 
-// Función para obtener los todos desde el local storage
 function getTodos() {
   const todosJSON = localStorage.getItem('todos');
   return todosJSON ? JSON.parse(todosJSON) : [];
 }
 
-// Función para renderizar los todos en la lista
 function renderTodos() {
-  todoList.innerHTML = ''; // Limpiar la lista antes de renderizar los todos
+  todoList.innerHTML = '';
+
+  if (todos.length === 0) {
+    return;
+  }
 
   todos.forEach((todo, index) => {
     const newTodo = createTodoElement(todo.text, todo.completed);
@@ -153,33 +134,31 @@ function renderTodos() {
   });
 }
 
-// Evento para manejar la pulsación de la tecla "Enter" en el campo de entrada
 newTodoInput.addEventListener('keydown', function(event) {
   if (event.key === 'Enter') {
     addTodo();
   }
 });
 
-// Función para agregar una nueva tarea
 function addTodo() {
   const text = newTodoInput.value.trim();
   const letterCount = text.length;
 
   if (letterCount < 3) {
-      showAlertMinLetters();
-      return;
+    showAlertMinLetters();
+    return;
   }
 
   if (letterCount > 70) {
-      showAlertMaxLetters();
-      newTodoInput.value = newTodoInput.value.slice(0, 70); // Limitar el contenido a 70 caracteres
+    showAlertMaxLetters();
+    newTodoInput.value = newTodoInput.value.slice(0, 70);
 
-      return;
+    return;
   }
 
   const newTodo = {
-      text: text,
-      completed: false
+    text: text,
+    completed: false
   };
 
   todos.push(newTodo);
@@ -190,9 +169,6 @@ function addTodo() {
   newTodoInput.value = '';
 }
 
-  
-
-// Función para eliminar una tarea
 function deleteTodo(todoElement) {
   const index = Array.from(todoList.children).indexOf(todoElement);
   if (index !== -1) {
@@ -203,10 +179,8 @@ function deleteTodo(todoElement) {
   }
 }
 
-// Obtener los checkboxes
 const checkboxes = document.querySelectorAll('.todo-item input[type="checkbox"]');
 
-// Recuperar el estado guardado en el Local Storage
 function restoreCheckboxState() {
   const checkedValuesString = localStorage.getItem('checkedValues');
   if (checkedValuesString) {
@@ -219,7 +193,6 @@ function restoreCheckboxState() {
   }
 }
 
-// Guardar el estado en el Local Storage
 function saveCheckboxState() {
   const checkedValues = Array.from(checkboxes)
     .filter((checkbox) => checkbox.checked)
@@ -228,19 +201,12 @@ function saveCheckboxState() {
   localStorage.setItem('checkedValues', checkedValuesString);
 }
 
-// Escuchar los cambios en los checkboxes y guardar el estado
 checkboxes.forEach((checkbox) => {
   checkbox.addEventListener('change', saveCheckboxState);
 });
 
-// Restaurar el estado al cargar la página
 document.addEventListener('DOMContentLoaded', () => {
-  todos = getTodos();
   renderTodos();
   updateItemCount();
   restoreCheckboxState();
 });
-
-
-
-
