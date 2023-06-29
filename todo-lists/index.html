@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My todo APP</title>
+  <link rel="stylesheet" href="./styles/index.css" />
+</head>
+<body>
+  <main class="main-app__container">
+    <div class="todo__container">
+      <nav>
+        <h1>TODO</h1>
+        <span id="moon">☾</span>
+        <span id="sun">☀</span>
+      </nav>
+
+      <div class="create-todo__container">
+        <input type="checkbox" name="" id="checkbox" />
+        <input
+          type="text"
+          class="create-items__container"
+          placeholder="Create a new todo…"
+          id="newTodoInput"
+          maxlength="71"
+        />
+      </div>
+      
+      
+      <div id="notification"></div>
+
+      <div class="items__container">
+        <ul id="todoList">
+          <li class="example-item">
+            <div class="todo-item">
+              <input type="checkbox" id="checkbox" />
+              <label for="checkbox">items </label>
+              <button class="delete-button">X</button>
+            </div>
+          </li>
+        </ul>
+      </div>
+      
+    
+      <div class="info__container">
+        <span id="contador" data-count="1">0 item left</span>
+
+        
+
+
+
+        <div class="control__container desktop">
+          <ul>
+            <li>All</li>
+            <li>Active</li>
+            <li>Complete</li>
+          </ul>
+        </div>
+        <span id="clearCompleted">Clear Completed</span>
+      </div>
+      
+      <div class="control__container">
+        <ul>
+          <li>All</li>
+          <li>Active</li>
+          <li>Complete</li>
+        </ul>
+      </div>
+    </div>
+  </main>
+  
+
+
+<script src="scripts/SwitchIcon.js"></script>
+<script src="scripts/add.js"></script>
+<script src="scripts/items.js"></script>
+
+
+</body>
+</html>
+
