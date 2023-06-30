@@ -365,7 +365,7 @@ display: none;
 
 
 .todo-item input[type="checkbox"]:checked {
-  background-image: url("../assets/oval.png");
+  background-image: url("./assets/oval.png");
   background-size: cover;
 }
 
