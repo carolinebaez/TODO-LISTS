@@ -368,6 +368,8 @@ display: none;
   background-image: url("../assets/oval.png");
   background-size: cover;
 }
+
+
 .todo-item input[type="checkbox"]:checked::before {
   content: "✔";
   color: white;
